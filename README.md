@@ -1,6 +1,6 @@
 
 # CoreMotionMagic
-CoreMotionMagic is a CoreMotion wrapper, the aim's to facilitate the use of Core Motion in amateur projects.
+CoreMotionMagic is a CoreMotion wrapper, that aim's to facilitate the use of Core Motion in amateur projects.
 
 ## Installation
 
