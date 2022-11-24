@@ -6,6 +6,6 @@ final class CoreMotionMagicTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(CoreMotionMagic().text, "Hello, World!")
+//        XCTAssertEqual(CoreMotionMagic().text, "Hello, World!")
     }
 }
