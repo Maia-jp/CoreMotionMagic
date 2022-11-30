@@ -17,7 +17,7 @@ public class CoreMotionMagic:ObservableObject{
     private(set) var availableSensors:[CMMSensors] = []
     private(set) var activeSensors:[CMMSensors] = []
     
-    var updateTime:Double = 0
+    public var updateTime:Double = 1
     
     //Sensor Data
     @Published public var acceleration:CMAccelerometerData? {didSet{
