@@ -10,7 +10,7 @@ import CoreMotion
 
 ///  Wrapper To facilitate the use of CoreMotion
 public class CoreMotionMagic:ObservableObject{
-    static let shared = CoreMotionMagic()
+    public static let shared = CoreMotionMagic()
     private let motion = CMMotionManager()
     private let altimeterManager = CMAltimeter()
     
@@ -20,41 +20,41 @@ public class CoreMotionMagic:ObservableObject{
     var updateTime:Double = 0
     
     //Sensor Data
-    @Published var acceleration:CMAccelerometerData? {didSet{
+    @Published public var acceleration:CMAccelerometerData? {didSet{
         guard let acceleration else {return}
         accelerationBuffer.append(acceleration)
     }}
-    @Published var gyro:CMGyroData?{didSet{
+    @Published public var gyro:CMGyroData?{didSet{
         guard let gyro else {return}
         gyroBuffer.append(gyro)
     }}
-    @Published var magnetometer:CMMagnetometerData?{didSet{
+    @Published public var magnetometer:CMMagnetometerData?{didSet{
         guard let magnetometer else {return}
         magnetometerBuffer.append(magnetometer)
     }}
-    @Published var altimeter:CMAltitudeData?{didSet{
+    @Published public var altimeter:CMAltitudeData?{didSet{
         guard let altimeter else {return}
         altimeterBuffer.append(altimeter)
     }}
     
     //Sensor Buffer
-    var bufferSensorSize:Int = 624
-    @Published var accelerationBuffer:[CMAccelerometerData] = [] {didSet{
+    public var bufferSensorSize:Int = 624
+    @Published public var accelerationBuffer:[CMAccelerometerData] = [] {didSet{
         if(accelerationBuffer.count > bufferSensorSize){
             accelerationBuffer.remove(at: 0)
         }
     }}
-    @Published var gyroBuffer:[CMGyroData] = [] {didSet{
+    @Published public var gyroBuffer:[CMGyroData] = [] {didSet{
         if(gyroBuffer.count > bufferSensorSize){
             gyroBuffer.remove(at: 0)
         }
     }}
-    @Published var magnetometerBuffer:[CMMagnetometerData] = []{didSet{
+    @Published public var magnetometerBuffer:[CMMagnetometerData] = []{didSet{
         if(magnetometerBuffer.count > bufferSensorSize){
             magnetometerBuffer.remove(at: 0)
         }
     }}
-    @Published var altimeterBuffer:[CMAltitudeData] = []{didSet{
+    @Published public var altimeterBuffer:[CMAltitudeData] = []{didSet{
         if(altimeterBuffer.count > bufferSensorSize){
             altimeterBuffer.remove(at: 0)
         }
@@ -75,7 +75,7 @@ public class CoreMotionMagic:ObservableObject{
     /// Returns all available sensors in this device (CoreMotion Only)
     /// - Returns: a list of CMMSensors containing all available sensors in this device
     @available(iOS 15.0, *)
-    func checkAllAvailableSensors()->[CMMSensors]{
+    public func checkAllAvailableSensors()->[CMMSensors]{
         availableSensors = []
         if(motion.isMagnetometerAvailable){
             availableSensors.append(.Magnetometer)
@@ -105,7 +105,7 @@ public class CoreMotionMagic:ObservableObject{
     /// - Parameters:
     ///   - sensor: CMMSensor enum indicating the sensor to be activeted
     ///   - updateTime: Default time for all sensors update
-    func startSensor(_ sensor:CMMSensors, withUpdateTimeOf updateTime:Double){
+    public func startSensor(_ sensor:CMMSensors, withUpdateTimeOf updateTime:Double){
         if !availableSensors.contains(sensor) || activeSensors.contains(sensor){
             return
         }
@@ -116,7 +116,7 @@ public class CoreMotionMagic:ObservableObject{
     
     /// Start the desired sensor based on the enum given
     /// - Parameter sensor: CMMsensor to be started
-    func startSensor(_ sensor:CMMSensors){
+    public func startSensor(_ sensor:CMMSensors){
         if !availableSensors.contains(sensor) || activeSensors.contains(sensor){
             return
         }
@@ -139,7 +139,7 @@ public class CoreMotionMagic:ObservableObject{
     }
     
     /// Start all sensors avaliable in this device
-    func startAllSensors(){
+    public func startAllSensors(){
         for sensor in availableSensors {
             startSensor(sensor)
         }
@@ -147,7 +147,7 @@ public class CoreMotionMagic:ObservableObject{
     
     /// Start all sensors except the one desired
     /// - Parameter desiredSensor: sensor that will NOT be started
-    func startAllExcept(_ desiredSensor:CMMSensors){
+    public func startAllExcept(_ desiredSensor:CMMSensors){
         for sensor in availableSensors {
             if(sensor != desiredSensor){
                 startSensor(sensor)
@@ -188,7 +188,7 @@ public class CoreMotionMagic:ObservableObject{
     //
     /// Clear all buffer from desired sensor
     /// - Parameter sensor: sensorBuffer to be cleared
-    func clearSensorBuffer(fromSensor sensor:CMMSensors){
+    public func clearSensorBuffer(fromSensor sensor:CMMSensors){
         switch sensor {
         case .Accelerometer:
             self.accelerationBuffer = []
@@ -209,7 +209,7 @@ public class CoreMotionMagic:ObservableObject{
     //
     /// Stop the given sensor
     /// - Parameter sensor: sensor to be stoped
-    func stopSensor(_ sensor:CMMSensors){
+    public func stopSensor(_ sensor:CMMSensors){
         activeSensors = activeSensors.filter({$0 == sensor})
         switch sensor {
         case .Accelerometer:
@@ -226,7 +226,7 @@ public class CoreMotionMagic:ObservableObject{
     }
     
     /// Stops all sensors
-    func stopAllSensors(){
+    public func stopAllSensors(){
         for sensor in activeSensors{
             stopSensor(sensor)
         }
@@ -234,7 +234,7 @@ public class CoreMotionMagic:ObservableObject{
     
     /// Stop all sensors except the one given
     /// - Parameter desiredSensor: Sensor that will NOT BE STOPED
-    func stopAllExcept(_ desiredSensor:CMMSensors){
+    public func stopAllExcept(_ desiredSensor:CMMSensors){
         for sensor in activeSensors {
             if desiredSensor != sensor {
                 stopSensor(sensor)
