@@ -6,7 +6,7 @@
 //
 
 import Foundation
-public enum CMMSensors:CaseIterable{
+public enum CMMSensors:CaseIterable,Codable{
     case Accelerometer
     case Gyroscope
     case Magnetometer
